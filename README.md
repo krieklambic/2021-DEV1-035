@@ -1,2 +1,4 @@
-# 2021-DEV1-035
-A TDD Tic-Tac-Toe Kata 
+# Tic Tac Toe
+A sample command line Tic-Tac-Toe application developed using **Test Driven Development** approach. 
+
+
