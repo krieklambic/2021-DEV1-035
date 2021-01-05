@@ -3,13 +3,13 @@ package net.comexis.kata.tictactoe.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
+import net.comexis.kata.tictactoe.enums.PlayerType;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 //Lombok
 @Getter
@@ -54,18 +54,23 @@ public class Game {
         this.setGameStatus(new GameStatus());
     }
 
-    public Game(Long id, List<Move> moves){
-        this();
-        this.setId(id);
-        this.setMoves(moves);
-    }
-
     /**
      * Add a new move to the game
      * @param move
      */
     public void addMove(Move move){
         this.getMoves().add(move);
+    }
+
+    /**
+     * Get the Player Type (X or O) of the last move of the game
+     * @return PlayerType
+     */
+    public PlayerType getLastMovePlayerType(){
+        List<Move> moves = this.getMoves();
+        Collections.sort(moves);
+        Move move = moves.get(moves.size() - 1);
+        return move.getPlayerType();
     }
 
 }
