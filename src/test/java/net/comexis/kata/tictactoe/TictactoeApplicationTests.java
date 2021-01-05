@@ -14,26 +14,17 @@ import net.comexis.kata.tictactoe.exception.InvalidPlayerOrderException;
 import net.comexis.kata.tictactoe.exception.NotEmptyCellException;
 import net.comexis.kata.tictactoe.service.GameService;
 import net.comexis.kata.tictactoe.service.MoveService;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.util.Assert;
 
 import java.util.ArrayList;
-
-import static org.hamcrest.Matchers.is;
-import static org.mockito.Mockito.when;
-import static org.mockito.ArgumentMatchers.any;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 
 @RunWith(SpringRunner.class)
@@ -47,21 +38,18 @@ class TictactoeApplicationTests {
     private final Integer INVALID_CELL_NUMBER_GT9 = 10;                       // Invalid cell number ( > 9)
     private final Integer INVALID_CELL_NUMBER_LT1 = 0;                        // Invalid cell number ( < 1)
 
-
     private Game game;
 
     @Autowired
-    MockMvc mockMvc;
-
-    @MockBean
     GameService gameService;
 
-    @MockBean
+    @Autowired
     MoveService moveService;
 
     @BeforeEach
     public void setUp(){
-        this.game = new Game(1234567890L, new ArrayList<>());
+        this.game = new Game();
+        this.gameService.save(game);
     }
 
     // X must play first
