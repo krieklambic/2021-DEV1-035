@@ -49,4 +49,13 @@ public class Move {
     @UpdateTimestamp
     private Timestamp lastUpdated;
 
+    public Move(){
+        super();
+    }
+
+    public Move(Game game, Player player, Integer cellNumber){
+        this.setGame(game);
+        this.setPlayerType(player.getType());
+        this.setCellNumber(cellNumber);
+    }
 }

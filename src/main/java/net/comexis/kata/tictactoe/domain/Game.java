@@ -25,7 +25,7 @@ public class Game {
     @Column(name = "id")
     private Long id;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "prestation")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "game")
     private List<Move> moves = new ArrayList<>();
 
     @Column(name = "active")
@@ -43,6 +43,15 @@ public class Game {
 
     public Game(){
         super();
+    }
+
+    public Game(Long id, List<Move> moves){
+        this.setId(id);
+        this.setMoves(moves);
+    }
+
+    public void addMove(Move move){
+        this.getMoves().add(move);
     }
 
 }
