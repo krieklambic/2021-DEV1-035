@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 import net.comexis.kata.tictactoe.enums.PlayerType;
+import net.comexis.kata.tictactoe.exception.InvalidCellNumberException;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -18,6 +19,9 @@ import java.sql.Timestamp;
 @Entity
 @Table(name = "move")
 public class Move {
+
+    private static final Integer CELL_NUMBER_MIN = 1;
+    private static final Integer CELL_NUMBER_MAX = 9;
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_move")
@@ -57,5 +61,12 @@ public class Move {
         this.setGame(game);
         this.setPlayerType(player.getType());
         this.setCellNumber(cellNumber);
+    }
+
+    public void setCellNumber(Integer cellNumber){
+        if(cellNumber < CELL_NUMBER_MIN || cellNumber > CELL_NUMBER_MAX){
+            throw new InvalidCellNumberException("Invalic Cell number :  " + cellNumber + ". Celle number must be comprised between 1 and 9");
+        }
+        this.cellNumber = cellNumber;
     }
 }
