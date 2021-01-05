@@ -8,6 +8,7 @@ import net.comexis.kata.tictactoe.enums.PlayerType;
 import net.comexis.kata.tictactoe.exception.InvalidCellNumberException;
 import net.comexis.kata.tictactoe.exception.InvalidPlayerException;
 import net.comexis.kata.tictactoe.exception.InvalidPlayerOrderException;
+import net.comexis.kata.tictactoe.exception.NotEmptyCellException;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -61,12 +62,25 @@ public class Move implements Comparable<Move> {
     }
 
     public Move(Game game, Player player, Integer cellNumber){
-        //Check if the current player is valid
-        this.checkPlayer(game, player);
-
         this.setGame(game);
         this.setPlayerType(player.getType());
         this.setCellNumber(cellNumber);
+
+        //Check if the played cell is empty
+        this.checkPlayedCell(game, cellNumber);
+        //Check if the current player is valid
+        this.checkPlayer(game, player);
+    }
+
+    /**
+     * Check if the played cell is empty.
+     * @param game
+     * @param cellNumber
+     */
+    private void checkPlayedCell(Game game, Integer cellNumber) {
+        if(!game.cellIsEmpty(cellNumber)){
+            throw new NotEmptyCellException("Invalid cell: " + cellNumber + ". Played cell is not empty.");
+        }
     }
 
     /**

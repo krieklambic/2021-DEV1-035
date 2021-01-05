@@ -54,6 +54,11 @@ public class Game {
         this.setGameStatus(new GameStatus());
     }
 
+    @Transient
+    public Board getBoard(){
+        return new Board(this);
+    }
+
     /**
      * Add a new move to the game
      * @param move
@@ -66,6 +71,7 @@ public class Game {
      * Get the Player Type (X or O) of the last move of the game
      * @return PlayerType
      */
+    @Transient
     public PlayerType getLastMovePlayerType(){
         List<Move> moves = this.getMoves();
         Collections.sort(moves);
@@ -73,4 +79,9 @@ public class Game {
         return move.getPlayerType();
     }
 
+    public boolean cellIsEmpty(Integer cellNumber) {
+        Board board = this.getBoard();
+        Cell playedCell = board.getCells()[cellNumber - 1];
+        return playedCell.isEmpty();
+    }
 }
