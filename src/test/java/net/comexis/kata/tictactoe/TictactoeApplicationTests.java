@@ -1,7 +1,5 @@
 package net.comexis.kata.tictactoe;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import net.comexis.kata.tictactoe.domain.Game;
 import net.comexis.kata.tictactoe.domain.Move;
 import net.comexis.kata.tictactoe.domain.Player;
@@ -23,8 +21,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.Assert;
-
-import java.util.ArrayList;
 
 
 @RunWith(SpringRunner.class)
@@ -114,7 +110,7 @@ class TictactoeApplicationTests {
         this.addMove(this.game, this.playerX, 4);
 
         //Asserts that the game has the DRAW status
-        Assert.isTrue(GameStatusType.DRAW.equals(game.getGameStatus().getStatusType()), "Status of the game must be a DRAW");
+        Assert.isTrue(GameStatusType.DRAW.equals(game.getGameStatus().getStatusType()), "Status of the game must be DRAW");
     }
 
     // Game is over if all cells in a row are taken by a same player
@@ -127,10 +123,10 @@ class TictactoeApplicationTests {
         this.addMove(this.game, this.playerO, 1);
         this.addMove(this.game, this.playerX, 5);
         this.addMove(this.game, this.playerO, 2);
-        this.addMove(this.game, this.playerO, 6);
+        this.addMove(this.game, this.playerX, 6);
 
         //Asserts that the game has the Game Over status with a ROW win Type
-        Assert.isTrue(GameStatusType.DRAW.equals(game.getGameStatus().getStatusType()), "Status of the game must be a GameOver");
+        Assert.isTrue(GameStatusType.OVER.equals(game.getGameStatus().getStatusType()), "Status of the game must be GameOver");
         Assert.isTrue(WinType.ROW.equals(game.getGameStatus().getWinType()), "WinType of the game must be ROW");
     }
 
@@ -145,10 +141,10 @@ class TictactoeApplicationTests {
         this.addMove(this.game, this.playerO, 2);
         this.addMove(this.game, this.playerX, 4);
         this.addMove(this.game, this.playerO, 5);
-        this.addMove(this.game, this.playerO, 7);
+        this.addMove(this.game, this.playerX, 7);
 
         //Asserts that the game has the Game Over status with a ROW win Type
-        Assert.isTrue(GameStatusType.DRAW.equals(game.getGameStatus().getStatusType()), "Status of the game must be a GameOver");
+        Assert.isTrue(GameStatusType.OVER.equals(game.getGameStatus().getStatusType()), "Status of the game must be GameOver");
         Assert.isTrue(WinType.COLUMN.equals(game.getGameStatus().getWinType()), "WinType of the game must be COLUMN");
     }
 
@@ -163,10 +159,10 @@ class TictactoeApplicationTests {
         this.addMove(this.game, this.playerO, 2);
         this.addMove(this.game, this.playerX, 5);
         this.addMove(this.game, this.playerO, 4);
-        this.addMove(this.game, this.playerO, 9);
+        this.addMove(this.game, this.playerX, 9);
 
         //Asserts that the game has the Game Over status with a ROW win Type
-        Assert.isTrue(GameStatusType.DRAW.equals(game.getGameStatus().getStatusType()), "Status of the game must be a GameOver");
+        Assert.isTrue(GameStatusType.OVER.equals(game.getGameStatus().getStatusType()), "Status of the game must be a GameOver");
         Assert.isTrue(WinType.DIAGONAL.equals(game.getGameStatus().getWinType()), "WinType of the game must be DIAGONAL");
     }
 
@@ -189,17 +185,4 @@ class TictactoeApplicationTests {
         this.gameService.save(game);
         return move;
     }
-
-    /**
-     * Converts an object to its JSON String representation
-     * @param o Object to convert
-     * @return String JSON representation of the object
-     * @throws JsonProcessingException
-     */
-    private String toJSON(Object o) throws JsonProcessingException {
-        return new ObjectMapper().writeValueAsString(o);
-    }
-
-
-
 }

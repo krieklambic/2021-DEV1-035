@@ -35,4 +35,15 @@ public class GameStatus {
     @Enumerated(EnumType.STRING)
     private PlayerType playerType;
 
+    public GameStatus(){
+        super();
+    }
+
+    public GameStatus(GameStatusType statusType, WinType winType, Integer winTypeNumber, PlayerType playerType){
+        this.setStatusType(statusType);
+        this.setWinType(winType);
+        this.setWinTypeNumber(winTypeNumber);
+        this.setPlayerType(playerType);
+    }
+
 }

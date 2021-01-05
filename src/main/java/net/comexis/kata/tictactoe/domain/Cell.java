@@ -28,4 +28,8 @@ public class Cell {
         return this.playerType == null;
     }
 
+    public boolean isNotEmpty() {
+        return this.playerType != null;
+    }
+
 }

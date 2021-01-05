@@ -3,7 +3,9 @@ package net.comexis.kata.tictactoe.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
+import net.comexis.kata.tictactoe.enums.GameStatusType;
 import net.comexis.kata.tictactoe.enums.PlayerType;
+import net.comexis.kata.tictactoe.enums.WinType;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -65,6 +67,53 @@ public class Game {
      */
     public void addMove(Move move){
         this.getMoves().add(move);
+        this.updateStatus(move);
+    }
+
+    private void updateStatus(Move move) {
+        Board board = this.getBoard();
+        PlayerType playerType = move.getPlayerType();
+
+        for(WinType winType: WinType.values()){
+            if(playerWinsElement(board, playerType, winType)) return;
+        }
+
+        //Check if the board is full and there is no winner...
+        checkBoardIsFull(board);
+
+    }
+
+    /**
+     * Check if the player wins by taking all the cells of a row
+     * @param board
+     * @param playerType
+     * @param winType
+     * @return
+     */
+    private boolean playerWinsElement(Board board, PlayerType playerType, WinType winType) {
+        int winningElement = board.getWinningElement(playerType, winType);
+        if(winningElement > 0){
+            this.setGameStatus(new GameStatus(GameStatusType.OVER, winType, winningElement, playerType));
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Check if the board if full (A the cells have been played)
+     * @param board
+     */
+    private void checkBoardIsFull(Board board) {
+        if(board.isFull()){
+            this.setGameStatus(new GameStatus(GameStatusType.DRAW, null, null, null));
+        }
+    }
+
+    @Transient
+    public Move getLastMove(){
+        List<Move> moves = this.getMoves();
+        Collections.sort(moves);
+        return moves.get(moves.size() - 1);
     }
 
     /**
@@ -73,10 +122,11 @@ public class Game {
      */
     @Transient
     public PlayerType getLastMovePlayerType(){
-        List<Move> moves = this.getMoves();
-        Collections.sort(moves);
-        Move move = moves.get(moves.size() - 1);
-        return move.getPlayerType();
+        try {
+            return this.getLastMove().getPlayerType();
+        } catch (NullPointerException ne){
+            return null;
+        }
     }
 
     public boolean cellIsEmpty(Integer cellNumber) {
