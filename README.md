@@ -111,13 +111,13 @@ The API will respond with the created Game information :
  
 #### Place a move
 
-To place a move, POST to the http://localhost:8080/tic-tac-toe/api/move with the move information in the body :
+To place a move, POST to the http://localhost:8080/tic-tac-toe/api/move url with the move information in the body :
 
 `curl --header "Content-Type: application/json"  --request POST --data '{"game" : {"id" : 1}, "cellNumber" : 1, "playerType" : "X"}' http://localhost:8080/tic-tac-toe/api/moves`
 
 The API will respond with the confirmed move information :
 
-'{"id":2,"cellNumber":1,"playerType":"X","active":true}'
+`'{"id":2,"cellNumber":1,"playerType":"X","active":true}'`
 
 #### Get the new status of the game with updated move
 
@@ -129,7 +129,7 @@ The API will respond with the new game status :
 
 `{"id":1,"moves":[{"id":2,"cellNumber":1,"playerType":"X","active":true}],"gameStatus":{"statusType":"RUNNING","winType":null,"winTypeNumber":null,"playerType":null},"active":true,"board":{"cells":[{"number":1,"playerType":"X","empty":false},{"number":2,"playerType":null,"empty":true},{"number":3,"playerType":null,"empty":true},{"number":4,"playerType":null,"empty":true},{"number":5,"playerType":null,"empty":true},{"number":6,"playerType":null,"empty":true},{"number":7,"playerType":null,"empty":true},{"number":8,"playerType":null,"empty":true},{"number":9,"playerType":null,"empty":true}],"full":true}}`
 
-_Note that _
+_Note that we can now see the list of played moves_
 
 
 
