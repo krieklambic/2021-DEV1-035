@@ -42,7 +42,7 @@ public class MoveServiceImpl implements MoveService {
             Move move = new Move(game, new Player(entity.getPlayerType()), entity.getCellNumber());
             return this.repository.save(move);
         } else {
-            throw new InvalidGameException("Specified game id (" + entity.getGame().getId() + " does not exist !");
+            throw new InvalidGameException("Specified game id (" + entity.getGame().getId() + ") does not exist !");
         }
     }
 
