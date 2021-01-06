@@ -110,6 +110,7 @@ public class Game {
     }
 
     @Transient
+    @JsonIgnore
     public Move getLastMove(){
         List<Move> moves = this.getMoves();
         Collections.sort(moves);
@@ -121,6 +122,7 @@ public class Game {
      * @return PlayerType
      */
     @Transient
+    @JsonIgnore
     public PlayerType getLastMovePlayerType(){
         try {
             return this.getLastMove().getPlayerType();

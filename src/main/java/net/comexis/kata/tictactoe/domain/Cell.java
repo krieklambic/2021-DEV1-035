@@ -1,5 +1,6 @@
 package net.comexis.kata.tictactoe.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import net.comexis.kata.tictactoe.enums.PlayerType;
@@ -28,6 +29,7 @@ public class Cell {
         return this.playerType == null;
     }
 
+    @JsonIgnore
     public boolean isNotEmpty() {
         return this.playerType != null;
     }
