@@ -8,16 +8,13 @@ import net.comexis.kata.tictactoe.enums.PlayerType;
 @Setter
 public class Player {
 
-    private String name;
-
     private PlayerType type;
 
     public Player(){
         super();
     }
 
-    public Player(String name, PlayerType type){
-        this.setName(name);
+    public Player(PlayerType type){
         this.setType(type);
     }
 
